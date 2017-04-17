@@ -1,30 +1,45 @@
 package com.example.congn.kotlindemo
 
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
-import com.example.congn.kotlindemo.databinding.ActivityMainBinding
+import com.congnt.kotlinmvp.bus.RxBus
+import com.congnt.kotlinmvp.mvp.BaseActivity
+import com.congnt.kotlinmvp.navigator.AwesomeNavigation
+import com.example.congn.kotlindemo.fragment.*
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_activity_second.*
 
-class MainActivity : AppCompatActivity(), MvpView {
-    //The statement inside lazy will be call and save at the first time is call
-    // (e.g binding.setVariable(BR.item, user))
-    val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+class MainActivity : BaseActivity(R.layout.activity_main), LeftMenuViewExtensionDelegate {
+
+    override fun onBtn1Click() {
+        awesomeNavigation!!.openFragment(R.id.content_frame, FirstFragment(), "FirstFragment", AwesomeNavigation.FragmentActionType.REPLACE, AwesomeNavigation.FragmentAnimationType.NONE)
     }
-    var user = User("cong", "Nguyen")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//        var binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
-        binding.setVariable(BR.item, user)
-        binding.setVariable(BR.presenter, MvpPresenter(this))
-        user.user = "CCCCCCCCCCCC"
-        binding.executePendingBindings()
+
+    override fun onBtn2Click() {
+        awesomeNavigation!!.openFragment(R.id.content_frame, SecondFragment(), "SecondFragment", AwesomeNavigation.FragmentActionType.REPLACE, AwesomeNavigation.FragmentAnimationType.NONE)
     }
-    override fun onShowProgress() {
-        Log.d("AAAAA", "AAAAAAAAAAAAAAAAAA")
-        user.user = "Hello world"
-        binding.setVariable(BR.item, user)
+
+    override fun onBtn3Click() {
+//        awesomeNavigation!!.openFragment(R.id.content_frame, ThirdFragment(), "ThirdFragment", AwesomeNavigation.FragmentActionType.REPLACE, AwesomeNavigation.FragmentAnimationType.NONE)
+        RxBus.post("AAAAAAAAAaa")
+    }
+
+    override fun onHideDrawer() {
+        drawer_layout.closeDrawer(drawer.view)
+    }
+
+    override fun onShowDrawer() {
+        drawer_layout.openDrawer(drawer.view)
+    }
+
+    val drawer: LeftMenuFragment by lazy {
+        supportFragmentManager.findFragmentById(R.id.left_drawer) as LeftMenuFragment
+    }
+
+    override fun initialize() {
+        drawer.leftMenuDelegate = this
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        btn_showdrawer.setOnClickListener { onShowDrawer() }
+        RxBus.events(String::class.java)
+                .subscribe { tv_result.text = it }
     }
 }

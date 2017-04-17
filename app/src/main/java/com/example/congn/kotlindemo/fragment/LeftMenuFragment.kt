@@ -1,8 +1,9 @@
-package com.example.congn.kotlindemo
+package com.example.congn.kotlindemo.fragment
 
 import android.os.Bundle
 import android.view.View
 import com.congnt.kotlinmvp.mvp.BaseFragment
+import com.example.congn.kotlindemo.R
 import kotlinx.android.synthetic.main.fragment_left_menu.*
 
 interface LeftMenuViewExtensionDelegate {
