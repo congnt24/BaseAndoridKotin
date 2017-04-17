@@ -7,10 +7,10 @@ To using, sure that your android project can run kotlin code. If you don't know 
 ## This repo contain?
 ### 1. Navigator
 Normally, in your android project, you used to have so many Activity. Every screen is an activity.It's bored and hard to manage.
+
 The idea behing Navigator is we will use Fragment instead Activity. It's mean we will have 1 Activity, and all other screen is Fragment
 -> Activity control all fragment -> easy to passing data between fragments
 
-```
 To open a fragment just call
 ```java
  awesomeNavigation!!.openFragment(R.id.content_frame, FirstFragment(), tag="FirstFragment")
@@ -45,6 +45,7 @@ class FirstFragment : BaseFragment(R.layout.first_fragment){
         btn_submit.setOnClickListener { activity.awesomeNavigation!!.openFragment(R.id.content_frame, SecondFragment(), tag = "SecondFragment") }
     }
 }
+```
 ### 2. AwesomeSharedPreferences
 With this class you won't need to specific every boilerplate method for saving data in sharedpreference.
 Every thing you need is create your own SharedPreference suck as: MyPrefs and extends AwesomeSharedPreferences.
