@@ -11,6 +11,32 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 
 
+//Keyboard
+
+/**
+ * Hides the soft keyboard
+ */
+fun hideSoftKeyboard(activity: Activity) {
+    if (activity.currentFocus != null) {
+        val inputMethodManager = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(activity.currentFocus.windowToken, 0)
+    }
+}
+
+/**
+ * Shows the soft keyboard
+ */
+fun showSoftKeyboard(view: View) {
+    val inputMethodManager = view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    view.requestFocus()
+    inputMethodManager.showSoftInput(view, 0)
+}
+
+fun toggleKeyBoard(context: Context) {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+}
+
 private fun getPackageInfoByPackageName(context: Context, packageName: String): PackageInfo? {
     val pm = context.packageManager
     try {
@@ -76,30 +102,4 @@ fun lightUpScreen(context: Context) {
         val wl_cpu = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyCpuLock")
         wl_cpu.acquire(10000)
     }
-}
-
-//Keyboard
-
-/**
- * Hides the soft keyboard
- */
-fun hideSoftKeyboard(activity: Activity) {
-    if (activity.currentFocus != null) {
-    val inputMethodManager = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.hideSoftInputFromWindow(activity.currentFocus.windowToken, 0)
-    }
-}
-
-/**
- * Shows the soft keyboard
- */
-fun showSoftKeyboard(view: View) {
-    val inputMethodManager = view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-    view.requestFocus()
-    inputMethodManager.showSoftInput(view, 0)
-}
-
-fun toggleKeyBoard(context: Context) {
-    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 }
