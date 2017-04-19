@@ -2,17 +2,13 @@ package com.example.congn.kotlindemo.fragment
 
 import android.os.Bundle
 import android.view.View
+import com.congnt.kotlinmvp.bus.RxBus
 import com.congnt.kotlinmvp.mvp.BaseFragment
+import com.congnt.kotlinmvp.navigator.AwesomeNavigation
+import com.example.congn.kotlindemo.LeftMenuViewExtensionDelegate
 import com.example.congn.kotlindemo.R
 import kotlinx.android.synthetic.main.fragment_left_menu.*
 
-interface LeftMenuViewExtensionDelegate {
-    fun onBtn1Click()
-    fun onBtn2Click()
-    fun onBtn3Click()
-    fun onHideDrawer()
-    fun onShowDrawer()
-}
 
 /**
  * Created by congn on 4/16/2017.
@@ -23,13 +19,14 @@ class LeftMenuFragment : BaseFragment(R.layout.fragment_left_menu), View.OnClick
         leftMenuDelegate!!.onHideDrawer()
         when (v) {
             left_btn1 -> {
-                leftMenuDelegate!!.onBtn1Click()
+                activity.awesomeNavigation!!.openFragment(R.id.content_frame, FirstFragment(), "FirstFragment", AwesomeNavigation.FragmentActionType.REPLACE, AwesomeNavigation.FragmentAnimationType.NONE)
             }
             left_btn2 -> {
-                leftMenuDelegate!!.onBtn2Click()
+                activity.awesomeNavigation!!.openFragment(R.id.content_frame, SecondFragment(), "SecondFragment", AwesomeNavigation.FragmentActionType.REPLACE, AwesomeNavigation.FragmentAnimationType.NONE)
+
             }
-            left_btn3 -> {
-                leftMenuDelegate!!.onBtn3Click()
+            left_btn3 -> {//post an event
+                RxBus.post("AAAAAAAAAaa")
             }
         }
 

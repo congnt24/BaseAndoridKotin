@@ -13,7 +13,18 @@ import java.util.*
  * Create new instance of inner class to save a object/ collection to shared preferences
  * Created by NGUYEN TRUNG CONG on 09/13/2016
  */
-abstract class AwesomeSharedPreferences(protected var context: Context) {
+abstract class AwesomeSharedPreferences {
+    companion object FACTORY {
+        var context: Context? = null
+        fun initialize(ctx: Context) {
+            context = ctx
+        }
+    }
+
+    fun initialize(ctx: Context) {
+        context = ctx
+    }
+
     val pref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     protected val editor: SharedPreferences.Editor
 
@@ -72,6 +83,12 @@ abstract class AwesomeSharedPreferences(protected var context: Context) {
     }
 
     abstract inner class SimpleSharedPreferences<T>(open var id: String) {
+        init {
+            if (context == null) {
+                throw Throwable("Please call initilize(context: Context) in your Application")
+            }
+        }
+
         /**
          * If object you're using isn't a primary type, override this method by
          * return new TypeToken<T>(){}.getType()
@@ -89,7 +106,7 @@ abstract class AwesomeSharedPreferences(protected var context: Context) {
 
         fun load(defaultT: T): T {
             val str = pref.getString(id, "")
-            return if (str == "") defaultT else Gson().fromJson<Any>(str, type) as T
+            return if (str == "") defaultT else Gson().fromJson<T>(str, type)
         }
     }
 

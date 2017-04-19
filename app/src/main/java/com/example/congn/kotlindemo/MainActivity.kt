@@ -1,26 +1,17 @@
 package com.example.congn.kotlindemo
 
+import android.util.Log
 import com.congnt.kotlinmvp.bus.RxBus
 import com.congnt.kotlinmvp.mvp.BaseActivity
-import com.congnt.kotlinmvp.navigator.AwesomeNavigation
-import com.example.congn.kotlindemo.fragment.*
+import com.example.congn.kotlindemo.fragment.LeftMenuFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_activity_second.*
 
+interface LeftMenuViewExtensionDelegate {
+    fun onHideDrawer()
+    fun onShowDrawer()
+}
 class MainActivity : BaseActivity(R.layout.activity_main), LeftMenuViewExtensionDelegate {
-
-    override fun onBtn1Click() {
-        awesomeNavigation!!.openFragment(R.id.content_frame, FirstFragment(), "FirstFragment", AwesomeNavigation.FragmentActionType.REPLACE, AwesomeNavigation.FragmentAnimationType.NONE)
-    }
-
-    override fun onBtn2Click() {
-        awesomeNavigation!!.openFragment(R.id.content_frame, SecondFragment(), "SecondFragment", AwesomeNavigation.FragmentActionType.REPLACE, AwesomeNavigation.FragmentAnimationType.NONE)
-    }
-
-    override fun onBtn3Click() {
-//        awesomeNavigation!!.openFragment(R.id.content_frame, ThirdFragment(), "ThirdFragment", AwesomeNavigation.FragmentActionType.REPLACE, AwesomeNavigation.FragmentAnimationType.NONE)
-        RxBus.post("AAAAAAAAAaa")
-    }
 
     override fun onHideDrawer() {
         drawer_layout.closeDrawer(drawer.view)
@@ -41,5 +32,10 @@ class MainActivity : BaseActivity(R.layout.activity_main), LeftMenuViewExtension
         btn_showdrawer.setOnClickListener { onShowDrawer() }
         RxBus.events(String::class.java)
                 .subscribe { tv_result.text = it }
+        MyPrefs.isFirst.save(true)
+        Log.d("TAG", "AAAAAAAAAA " + MyPrefs.isFirst.load(defaultT = false))
+        Log.d("TAG", "AAAAAAAAAA Context is null:? " + MyApp.appComponent.getOkHttpClient().connectTimeoutMillis())
+
+
     }
 }

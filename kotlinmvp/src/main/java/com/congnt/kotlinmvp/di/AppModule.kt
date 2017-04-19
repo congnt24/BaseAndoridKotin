@@ -2,10 +2,15 @@ package com.congnt.kotlinmvp.di
 
 import android.content.Context
 import android.content.res.Resources
-import com.google.gson.Gson
-import com.tbruyelle.rxpermissions.RxPermissions
+import android.location.LocationManager
+import android.net.ConnectivityManager
+import com.congnt.kotlinmvp.utility.getOkHttpClient
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import java.io.File
 import javax.inject.Singleton
 
 /**
@@ -28,7 +33,28 @@ class AppModule (private val context: Context) {
 
     @Singleton
     @Provides
-    fun getGson(): Gson {
-        return Gson()
+    fun getOkHttp(): OkHttpClient {
+        val baseDir = context.cacheDir
+        var cacheDir: File? = null
+        if (baseDir != null) {
+            cacheDir = File(baseDir, "HttpResponseCache")
+        }
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        return getOkHttpClient(cache = Cache(cacheDir, 10 * 1024 * 1024),
+                interceptors = interceptor)
+    }
+
+
+    @Singleton
+    @Provides
+    fun getLocationManager(): LocationManager {
+        return context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
+    @Singleton
+    @Provides
+    fun getConectivityManager(): ConnectivityManager {
+        return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 }

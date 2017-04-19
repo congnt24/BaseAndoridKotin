@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
  * Created by congn on 4/15/2017.
  */
 
-fun getOkHttpClient(headerMap: Map<String, String>?, connectTimeoutInMs: Int?, readTimeoutInMs: Int?, cache: Cache?, vararg interceptors: Interceptor?): OkHttpClient {
+fun getOkHttpClient(headerMap: Map<String, String>? = null, connectTimeoutInMs: Int? = 1000, readTimeoutInMs: Int? = 1000, cache: Cache?, vararg interceptors: Interceptor?): OkHttpClient {
     val httpClient = OkHttpClient.Builder()
     httpClient.connectTimeout(connectTimeoutInMs!!.toLong(), TimeUnit.MILLISECONDS)
     httpClient.readTimeout(readTimeoutInMs!!.toLong(), TimeUnit.MILLISECONDS)

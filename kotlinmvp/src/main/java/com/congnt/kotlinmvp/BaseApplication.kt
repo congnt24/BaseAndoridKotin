@@ -1,11 +1,17 @@
 package com.congnt.kotlinmvp
 
 import android.app.Application
+import com.congnt.kotlinmvp.mvp.AwesomeSharedPreferences
 
 /**
  * Created by congn on 3/21/2017.
  */
-class BaseApplication : Application()//    public ApplicationComponent applicationComponent;
+open class BaseApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        AwesomeSharedPreferences.initialize(this)
+    }
+}
 //
 //    @Override
 //    public void onCreate() {

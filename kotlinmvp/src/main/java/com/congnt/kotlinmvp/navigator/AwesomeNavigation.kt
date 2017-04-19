@@ -88,25 +88,25 @@ class AwesomeNavigation<in F : Fragment>(var activity: BaseActivity) {
     /**
      * Hide previous fragments
      */
-    fun hideFragments() {
-        val stackCount = fragmentManager!!.backStackEntryCount
-        if (fragmentManager!!.fragments != null) {
-            val fragmentSize = fragmentManager!!.fragments.size
-            Log.d(TAG, "hideFragments() called$stackCount $fragmentSize")
-            if (stackCount > currentBackStackSize) {//Add
-                for (i in 0..stackCount - 1) {
-                    fragmentTransaction!!.hide(fragmentManager!!.fragments[i])
-                }
-            } else {//remove
-                val fragmentTransaction = fragmentManager!!.beginTransaction()
-                fragmentTransaction.commit()
-                for (i in 0..stackCount - 1) {
-                    fragmentTransaction.hide(fragmentManager!!.fragments[i])
-                }
-            }
-        }
-        currentBackStackSize = stackCount
-    }
+    //    fun hideFragments() {
+//        val stackCount = fragmentManager!!.backStackEntryCount
+//        if (fragmentManager!!.fragments != null) {
+//            val fragmentSize = fragmentManager!!.fragments.size
+//            Log.d(TAG, "hideFragments() called$stackCount $fragmentSize")
+//            if (stackCount > currentBackStackSize) {//Add
+//                for (i in 0..stackCount - 1) {
+//                    fragmentTransaction!!.hide(fragmentManager!!.fragments[i])
+//                }
+//            } else {//remove
+//                val fragmentTransaction = fragmentManager!!.beginTransaction()
+//                fragmentTransaction.commit()
+//                for (i in 0..stackCount - 1) {
+//                    fragmentTransaction.hide(fragmentManager!!.fragments[i])
+//                }
+//            }
+//        }
+//        currentBackStackSize = stackCount
+//    }
 
     /**
      * We have a list of backstack, and we need to show a fragment in a middle of stack, so, We don't pop top fragment, we hide it

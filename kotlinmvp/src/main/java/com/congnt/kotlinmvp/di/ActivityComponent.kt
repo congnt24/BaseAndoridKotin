@@ -5,7 +5,8 @@ import dagger.Component
 /**
  * Created by congn on 4/15/2017.
  */
+@ActivityScope
 @Component(modules = arrayOf(ActivityModule::class), dependencies = arrayOf(AppComponent::class))
-class ActivityComponent {
+interface ActivityComponent {
     //Inject activity here
 }

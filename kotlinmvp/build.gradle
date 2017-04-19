@@ -27,6 +27,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     // Required for instrumented tests
     androidTestCompile 'com.android.support:support-annotations:25.3.1'
@@ -44,10 +45,12 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     //Dagger2
     compile 'com.google.dagger:dagger:2.10'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
+    kapt 'com.google.dagger:dagger-compiler:2.10'
 
     //RxPermission
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'
+    //Picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 repositories {

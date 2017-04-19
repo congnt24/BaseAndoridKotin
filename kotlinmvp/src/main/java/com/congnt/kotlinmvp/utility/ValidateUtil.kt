@@ -4,7 +4,7 @@ import java.util.regex.Pattern
 
 var PATTERN_MOBILE_REGEX = Pattern.compile("0\\d{9,10}")
 var PATTERN_EMAIL_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
-val PATTERN_PASSWORD_REGEX = Pattern.compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\s+$).{5,10}")
+//val PATTERN_PASSWORD_REGEX2 = Pattern.compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\s+$).{5,10}")
 val PATTERN_PASSWORD_REGEX2 = Pattern.compile("(?=.*[0-9])(?=.*[a-zA-Z]).{8,}")
 val PATTERN_MONTH_CARD_REGEX = Pattern.compile("(^0[1-9]){1,2}$|(^1[0-2]){1,2}$")
 val PATTERN_CCV_CARD_REGEX_3 = Pattern.compile("^[0-9]{3}$")

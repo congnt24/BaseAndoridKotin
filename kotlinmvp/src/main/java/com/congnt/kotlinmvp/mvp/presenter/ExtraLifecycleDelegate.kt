@@ -1,12 +1,13 @@
-package com.congnt.kotlinmvp.mvp.view
+package com.congnt.kotlinmvp.mvp.presenter
 
 import android.content.Intent
 import android.view.KeyEvent
+import com.congnt.kotlinmvp.mvp.view.EventsDelegate
 
 /**
  * Created by congn on 4/15/2017.
  */
-interface ExtraLifecycleDelegate {
+interface ExtraLifecycleDelegate : EventsDelegate {
     fun onBackPressed(): Boolean {
         return false
     }

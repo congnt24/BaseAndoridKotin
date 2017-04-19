@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
-import com.congnt.kotlinmvp.mvp.view.ExtraLifecycleDelegate
-import com.congnt.kotlinmvp.mvp.view.MainLifecycleDelegate
+import com.congnt.kotlinmvp.mvp.presenter.ExtraLifecycleDelegate
+import com.congnt.kotlinmvp.mvp.presenter.MainLifecycleDelegate
 import com.congnt.kotlinmvp.navigator.AwesomeNavigation
 import com.congnt.kotlinmvp.utility.hideSoftKeyboard
 
