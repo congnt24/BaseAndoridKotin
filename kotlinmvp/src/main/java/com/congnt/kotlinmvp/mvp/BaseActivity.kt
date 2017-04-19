@@ -10,7 +10,8 @@ import com.congnt.kotlinmvp.navigator.AwesomeNavigation
 import com.congnt.kotlinmvp.utility.hideSoftKeyboard
 
 /**
- * Created by congn on 3/21/2017.
+ * awesomeNavigation: to add/replace/pop fragment
+ * Show/hide progress
  */
 abstract class BaseActivity(open var layoutId: Int) : AppCompatActivity(), FragmentManager.OnBackStackChangedListener {
     var awesomeNavigation: AwesomeNavigation<BaseFragment>? = null

@@ -6,9 +6,8 @@ import io.reactivex.disposables.Disposable
 
 
 /**
- * Created by congn on 03/21/2017.
+ * Extend this class to have some base function suck as: attack and release view, add/clear subscription
  */
-
 abstract class BasePresenter<V : MvpView> {
     val disposables: CompositeDisposable by lazy {
         CompositeDisposable()
