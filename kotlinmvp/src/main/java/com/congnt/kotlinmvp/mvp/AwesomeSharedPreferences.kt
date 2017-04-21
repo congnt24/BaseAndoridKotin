@@ -95,7 +95,7 @@ abstract class AwesomeSharedPreferences {
 
          * @return TypeToken
         </T> */
-        protected val type: Type
+        protected open val type: Type
             get() = object : TypeToken<T>() {
             }.type
 
@@ -104,9 +104,9 @@ abstract class AwesomeSharedPreferences {
             editor.commit()
         }
 
-        fun load(defaultT: T): T {
+        fun load(defaultT: T? = null): T {
             val str = pref.getString(id, "")
-            return if (str == "") defaultT else Gson().fromJson<T>(str, type)
+            return if (str == "") defaultT!! else Gson().fromJson(str, type)
         }
     }
 

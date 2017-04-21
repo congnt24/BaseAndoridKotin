@@ -33,7 +33,9 @@ class MainActivity : BaseActivity(R.layout.activity_main), LeftMenuViewExtension
         RxBus.events(String::class.java)
                 .subscribe { tv_result.text = it }
         MyPrefs.isFirst.save(true)
+        MyPrefs.test.save(User("Cong"))
         Log.d("TAG", "AAAAAAAAAA " + MyPrefs.isFirst.load(defaultT = false))
+        Log.d("TAG", "AAAAAAAAAA " + MyPrefs.test.load())
         Log.d("TAG", "AAAAAAAAAA Context is null:? " + MyApp.appComponent.getOkHttpClient().connectTimeoutMillis())
 
 
