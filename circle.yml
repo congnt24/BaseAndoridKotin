@@ -24,3 +24,5 @@ test:
     override:
         - (./gradlew assemble):
             timeout: 360
+        # perform unit tests
+        - ./gradlew tesMockDebugUnitTest
