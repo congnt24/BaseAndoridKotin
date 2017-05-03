@@ -6,11 +6,13 @@ import com.congnt.kotlinmvp.mvp.BaseActivity
 import com.example.congn.kotlindemo.fragment.LeftMenuFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_activity_second.*
+import java.util.*
 
 interface LeftMenuViewExtensionDelegate {
     fun onHideDrawer()
     fun onShowDrawer()
 }
+
 class MainActivity : BaseActivity(R.layout.activity_main), LeftMenuViewExtensionDelegate {
 
     override fun onHideDrawer() {
@@ -30,13 +32,13 @@ class MainActivity : BaseActivity(R.layout.activity_main), LeftMenuViewExtension
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         btn_showdrawer.setOnClickListener { onShowDrawer() }
+        btn_test.setOnClickListener { MyPrefs.test.save(User("Cong " + Random().nextInt(10))) }
+        MyPrefs.test.asObservable().subscribe { Log.d("TAG", "AAAAAAAAAA " + MyPrefs.test.load()) }
+
         RxBus.events(String::class.java)
                 .subscribe { tv_result.text = it }
         MyPrefs.isFirst.save(true)
-        MyPrefs.test.save(User("Cong"))
         Log.d("TAG", "AAAAAAAAAA " + MyPrefs.isFirst.load(defaultT = false))
-        Log.d("TAG", "AAAAAAAAAA " + MyPrefs.test.load())
-        Log.d("TAG", "AAAAAAAAAA Context is null:? " + MyApp.appComponent.getOkHttpClient().connectTimeoutMillis())
 
 
     }

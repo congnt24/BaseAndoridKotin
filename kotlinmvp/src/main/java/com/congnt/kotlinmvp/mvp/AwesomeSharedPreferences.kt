@@ -5,8 +5,12 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.functions.Consumer
 import java.lang.reflect.Type
 import java.util.*
+
 
 /**
  * Extend this class and
@@ -27,9 +31,15 @@ abstract class AwesomeSharedPreferences {
 
     val pref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     protected val editor: SharedPreferences.Editor
+    var keyChanges: Observable<String>? = null
 
     init {
         editor = pref.edit()
+        keyChanges = Observable.create(ObservableOnSubscribe<String> {
+            var listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key -> it.onNext(key) }
+            it.setCancellable { pref.unregisterOnSharedPreferenceChangeListener(listener) }
+            pref.registerOnSharedPreferenceChangeListener(listener)
+        }).share()
     }
 
     abstract inner class ListSharedPreferences<V>(override var id: String) : SimpleSharedPreferences<MutableList<V>>(id) {
@@ -107,6 +117,20 @@ abstract class AwesomeSharedPreferences {
         fun load(defaultT: T? = null): T {
             val str = pref.getString(id, "")
             return if (str == "") defaultT!! else Gson().fromJson(str, type)
+        }
+
+        fun remove() {
+            editor.remove(id)
+        }
+
+        fun asObservable(): Observable<T> {
+            return keyChanges!!.filter { id.equals(it/*changed key*/) }
+                    .startWith("<init>") // Dummy value to trigger initial load.
+                    .map({ load() })
+        }
+
+        fun asConsumer(): Consumer<T> {
+            return Consumer { save(it) }
         }
     }
 

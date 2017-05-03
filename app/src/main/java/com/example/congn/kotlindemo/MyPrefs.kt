@@ -12,9 +12,9 @@ object MyPrefs : AwesomeSharedPreferences() {
     var isFirst = object : SimpleSharedPreferences<Boolean>("is_first") {}
     var test = object : SimpleSharedPreferences<User>("user") {
         override val type: Type
-            get() = object : TypeToken<User>(){}.type
+            get() = object : TypeToken<User>() {}.type
     }
 }
 
-data class User(var name: String): Serializable{
+data class User(var name: String) : Serializable {
 }
