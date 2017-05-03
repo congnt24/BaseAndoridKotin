@@ -8,16 +8,25 @@ import android.widget.Toast
  * Created by congn on 4/19/2017.
  */
 
-fun String.d(TAG: String): Int {
-    return Log.d(TAG, this)
+ /**
+ * "TAG".d("this is a debug log")
+ */
+fun String.d(str: String): Int {
+    return Log.d(this, str)
 }
 
-fun String.e(TAG: String): Int {
-    return Log.e(TAG, this)
+ /**
+ * "TAG".d("this is a error log")
+ */
+fun String.e(str: String): Int {
+    return Log.e(this, str)
 }
 
-fun String.w(TAG: String): Int {
-    return Log.w(TAG, this)
+ /**
+ * "TAG".d("this is a warning log")
+ */
+fun String.w(str: String): Int {
+    return Log.w(this, str)
 }
 
 fun String.toast(context: Context) {

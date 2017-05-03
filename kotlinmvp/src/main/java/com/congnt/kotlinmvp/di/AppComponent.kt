@@ -17,5 +17,4 @@ interface AppComponent {
     //here we list things that are of Singleton-scope and should be accessible by other scopes
     fun getContext(): Context
     fun getConnectivityManager(): ConnectivityManager
-    fun getOkHttpClient(): OkHttpClient
 }

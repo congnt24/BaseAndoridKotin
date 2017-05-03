@@ -36,12 +36,12 @@ fun getOkHttpClient(headerMap: Map<String, String>? = null, connectTimeoutInMs: 
     httpClient.cache(cache)
     return httpClient.build()
 }
-fun getRetrofit(baseUrl: String, headerMap: Map<String, String>?, connectTimeoutInMs: Int?, readTimeoutInMs: Int?, cache: Cache?, vararg interceptors: Interceptor?): Retrofit {
+fun getRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
     var instance = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(getOkHttpClient(headerMap, connectTimeoutInMs, readTimeoutInMs, cache, *interceptors))
+            .client(okHttpClient)
             .build()
     return instance
 }

@@ -2,9 +2,7 @@ package com.congnt.kotlinmvp
 
 import checkMatchPattern
 import com.congnt.kotlinmvp.utility.PATTERN_EMAIL_REGEX
-import com.congnt.kotlinmvp.utility.PATTERN_PASSWORD_REGEX
 import com.congnt.kotlinmvp.utility.PATTERN_PASSWORD_REGEX2
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 

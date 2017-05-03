@@ -31,20 +31,6 @@ class AppModule (private val context: Context) {
         return context.resources
     }
 
-    @Singleton
-    @Provides
-    fun getOkHttp(): OkHttpClient {
-        val baseDir = context.cacheDir
-        var cacheDir: File? = null
-        if (baseDir != null) {
-            cacheDir = File(baseDir, "HttpResponseCache")
-        }
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        return getOkHttpClient(cache = Cache(cacheDir, 10 * 1024 * 1024),
-                interceptors = interceptor)
-    }
-
 
     @Singleton
     @Provides
