@@ -1,7 +1,7 @@
 package com.congnt.kotlinmvp
 
 import android.app.Application
-import com.congnt.kotlinmvp.mvp.AwesomeSharedPreferences
+import com.congnt.kotlinmvp.mvp.RxSharedPreferences
 
 /**
  * Created by congn on 3/21/2017.
@@ -9,6 +9,6 @@ import com.congnt.kotlinmvp.mvp.AwesomeSharedPreferences
 open class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        AwesomeSharedPreferences.initialize(this)
+        RxSharedPreferences.initialize(this)
     }
 }

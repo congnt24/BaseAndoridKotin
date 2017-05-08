@@ -32,14 +32,15 @@ class MainActivity : BaseActivity(R.layout.activity_main), LeftMenuViewExtension
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         btn_showdrawer.setOnClickListener { onShowDrawer() }
+        //Demo RxBus
+        RxBus.events(String::class.java)
+                .subscribe { tv_result.text = it }
+        //Demo SharedPreference
         btn_test.setOnClickListener { MyPrefs.test.save(User("Cong " + Random().nextInt(10))) }
         MyPrefs.test.asObservable().subscribe { Log.d("TAG", "AAAAAAAAAA " + MyPrefs.test.load()) }
 
-        RxBus.events(String::class.java)
-                .subscribe { tv_result.text = it }
         MyPrefs.isFirst.save(true)
         Log.d("TAG", "AAAAAAAAAA " + MyPrefs.isFirst.load(defaultT = false))
-
 
     }
 }

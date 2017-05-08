@@ -1,6 +1,6 @@
 package com.example.congn.kotlindemo
 
-import com.congnt.kotlinmvp.mvp.AwesomeSharedPreferences
+import com.congnt.kotlinmvp.mvp.RxSharedPreferences
 import com.google.gson.reflect.TypeToken
 import java.io.Serializable
 import java.lang.reflect.Type
@@ -8,7 +8,7 @@ import java.lang.reflect.Type
 /**
  * Created by congn on 4/17/2017.
  */
-object MyPrefs : AwesomeSharedPreferences() {
+object MyPrefs : RxSharedPreferences() {
     var isFirst = object : SimpleSharedPreferences<Boolean>("is_first") {}
     var test = object : SimpleSharedPreferences<User>("user") {
         override val type: Type

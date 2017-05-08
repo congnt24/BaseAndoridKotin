@@ -4,17 +4,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 public class TouchHelperCallback extends ItemTouchHelper.Callback {
-    private final AwesomeRecyclerAdapter mAdapter;
+    private final BaseSimpleRecyclerAdapter mAdapter;
     private boolean canDrag = true;
     private boolean canSwipe = true;
 
-    public TouchHelperCallback(AwesomeRecyclerAdapter mAdapter, boolean canSwipe, boolean canDrag) {
+    public TouchHelperCallback(BaseSimpleRecyclerAdapter mAdapter, boolean canSwipe, boolean canDrag) {
         this.mAdapter = mAdapter;
         this.canSwipe = canSwipe;
         this.canDrag = canDrag;
     }
 
-    public TouchHelperCallback(AwesomeRecyclerAdapter adapter) {
+    public TouchHelperCallback(BaseSimpleRecyclerAdapter adapter) {
         mAdapter = adapter;
     }
 

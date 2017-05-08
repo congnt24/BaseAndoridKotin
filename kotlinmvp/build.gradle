@@ -35,39 +35,53 @@ android {
         }
     }
 }
+ext {
+    supportVersion = '25.3.1'
+    playLibVersion = '10.2.0'
+    stethoVersion = '1.5.0'
+    rxJava = '2.0.1'
+    retrofitVersion = '2.2.0'
+    daggerVersion = '2.10'
+    picassoVersion = '2.5.2'
+    rxbindingVersion = '2.0.0'
+
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile "com.android.support:appcompat-v7:$supportVersion"
+    compile "com.android.support:recyclerview-v7:$supportVersion"
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     // Required for instrumented tests
-    androidTestCompile 'com.android.support:support-annotations:25.3.1'
+    androidTestCompile "com.android.support:support-annotations:$supportVersion"
     androidTestCompile 'com.android.support.test:runner:0.5'
     //Reactive X
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    compile "io.reactivex.rxjava2:rxandroid:$rxJava"
+    compile "io.reactivex.rxjava2:rxjava:$rxJava"
     // Retrofits
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.android.support:recyclerview-v7:25.3.1'
     //Dagger2
-    compile 'com.google.dagger:dagger:2.10'
-    kapt 'com.google.dagger:dagger-compiler:2.10'
+    compile "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     //RxPermission
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.3@aar'
     //Picasso
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "com.squareup.picasso:picasso:$picassoVersion"
     //Rxbinding
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbindingVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxbindingVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxbindingVersion"
+    compile "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxbindingVersion"
     //Stetho
-    compile 'com.facebook.stetho:stetho:1.5.0'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    compile "com.facebook.stetho:stetho:$stethoVersion"
+    compile "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
 }

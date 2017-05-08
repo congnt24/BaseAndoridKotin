@@ -8,9 +8,8 @@ import android.widget.TextView
 /**
  * Created by congn_000 on 9/14/2016.
  */
-class SimpleRecyclerAdapter(context: Context, mList: MutableList<String>
-        , onClickListener: AwesomeRecyclerAdapter.OnClickListener<String>) : AwesomeRecyclerAdapter<SimpleRecyclerAdapter.ViewHolder
-        , String>(context, mList, onClickListener) {
+class SimpleRecyclerAdapter(context: Context, mList: MutableList<String?>)
+    : BaseSimpleRecyclerAdapter<String>(context, mList) {
 
     override val itemLayoutId: Int
         get() = android.R.layout.simple_list_item_1
@@ -19,10 +18,10 @@ class SimpleRecyclerAdapter(context: Context, mList: MutableList<String>
         return ViewHolder(itemView)
     }
 
-    override fun bindHolder(holder: ViewHolder, position: Int) {
+    override fun bindHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = mList[position]
-        if (!item.isEmpty()) {
-            holder.bind(item)
+        if (item!=null && !item!!.isEmpty()) {
+            if (holder is ViewHolder) holder.bind(item)
         }
     }
 

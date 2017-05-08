@@ -9,4 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="Go to 2nd"/>
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
 </LinearLayout>

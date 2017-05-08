@@ -3,6 +3,7 @@ package com.congnt.kotlinmvp.mvp
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.congnt.kotlinmvp.mvp.RxSharedPreferences.SimpleSharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Observable
@@ -11,13 +12,16 @@ import io.reactivex.functions.Consumer
 import java.lang.reflect.Type
 import java.util.*
 
-
 /**
  * Extend this class and
- * Create new instance of inner class to save a object/ collection to shared preferences
+ * Create new instance of inner class to save a object/ collection to shared preferences.
+ * * If you want to subscribe for the change of a key, using like this:
+ *  aName.asObservable().subscribe { do something when the value is changed }
+ *  @see SimpleSharedPreferences.asObservable
+ *  @see RxSharedPreferences.keyChanges
  * Created by NGUYEN TRUNG CONG on 09/13/2016
  */
-abstract class AwesomeSharedPreferences {
+abstract class RxSharedPreferences {
     companion object FACTORY {
         var context: Context? = null
         fun initialize(ctx: Context) {
@@ -34,6 +38,7 @@ abstract class AwesomeSharedPreferences {
     var keyChanges: Observable<String>? = null
 
     init {
+        //register listener using RxJava
         editor = pref.edit()
         keyChanges = Observable.create(ObservableOnSubscribe<String> {
             var listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key -> it.onNext(key) }
@@ -42,16 +47,17 @@ abstract class AwesomeSharedPreferences {
         }).share()
     }
 
+    /**
+     * Easier for list. Except save() and load(), you can add/remove single value to/from a mutable list
+     */
     abstract inner class ListSharedPreferences<V>(override var id: String) : SimpleSharedPreferences<MutableList<V>>(id) {
-        fun add(value: V) {
+        fun insert(value: V, pos: Int? = null) {
             val list = load(ArrayList<V>())
-            list.add(value)
-            save(list)
-        }
-
-        fun insert(pos: Int, value: V) {
-            val list = load(ArrayList<V>())
-            list.add(pos, value)
+            if (pos == null) {
+                list.add(value)
+            } else {
+                list.add(pos, value)
+            }
             save(list)
         }
 
@@ -77,14 +83,8 @@ abstract class AwesomeSharedPreferences {
             save(map)
         }
 
-        /**
-         * @param key
-         * *
-         * @return nul if no have
-         */
         operator fun get(key: K): V? {
-            val map = load(HashMap<K, V>())
-            return if (has(key)) map[key] else null
+            return load(HashMap<K, V>())[key]
         }
 
         fun has(key: K): Boolean {
@@ -102,7 +102,8 @@ abstract class AwesomeSharedPreferences {
         /**
          * If object you're using isn't a primary type, override this method by
          * return new TypeToken<T>(){}.getType()
-
+         * for kotlin: override val type: Type
+                get() = object : TypeToken<User>() {}.type
          * @return TypeToken
         </T> */
         protected open val type: Type
@@ -123,6 +124,9 @@ abstract class AwesomeSharedPreferences {
             editor.remove(id)
         }
 
+        /**
+         * Using for listen the change of key
+         */
         fun asObservable(): Observable<T> {
             return keyChanges!!.filter { id.equals(it/*changed key*/) }
                     .startWith("<init>") // Dummy value to trigger initial load.
