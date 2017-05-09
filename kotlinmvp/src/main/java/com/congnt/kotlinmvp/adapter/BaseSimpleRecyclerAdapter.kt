@@ -10,13 +10,11 @@ import com.congnt.kotlinmvp.R
 import java.util.*
 
 /**
- * Created by congn_000 on 9/14/2016.
+ * Cal removeLoadingIfNeed() to remove loading view
  */
 abstract class BaseSimpleRecyclerAdapter<T>(context: Context, protected var mList: MutableList<T?>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val mLayoutInflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     val LOADING = 69
-
-    lateinit var onClickListener: BaseSimpleRecyclerAdapter.OnClickListener<T>
 
     protected val itemLayoutLoadingId = R.layout.layout_loading
 
@@ -26,8 +24,16 @@ abstract class BaseSimpleRecyclerAdapter<T>(context: Context, protected var mLis
 
     protected abstract fun bindHolder(holder: RecyclerView.ViewHolder, position: Int)
 
-    fun setOnScrollListener(rc: RecyclerView, body: (listener: EndlessRecyclerOnScrollListener)->Unit){
-        rc.setOnScrollListener(object : EndlessRecyclerOnScrollListener(rc.layoutManager as LinearLayoutManager){
+
+    init {
+        showLoading()
+    }
+
+    /**
+     * Call restate() when data is loaded
+     */
+    fun setOnScrollListener(rc: RecyclerView, body: (listener: EndlessRecyclerOnScrollListener) -> Unit) {
+        rc.setOnScrollListener(object : EndlessRecyclerOnScrollListener(rc.layoutManager as LinearLayoutManager, { if (!it) removeLoadingIfNeed() }) {
             override fun onLoadMore(current_page: Int) {
                 showLoading()
                 body(this)
@@ -51,9 +57,6 @@ abstract class BaseSimpleRecyclerAdapter<T>(context: Context, protected var mLis
             return
         }
         bindHolder(holder, position)
-        holder.itemView.setOnClickListener {
-            onClickListener!!.onClick(mList[position], position)
-        }
     }
 
     override fun getItemCount(): Int {
@@ -75,7 +78,8 @@ abstract class BaseSimpleRecyclerAdapter<T>(context: Context, protected var mLis
     }
 
     fun removeLoadingIfNeed() {
-        if (cacheLoadingPos in 0..mList.size) {
+        if (cacheLoadingPos < 0) cacheLoadingPos = 0
+        if (cacheLoadingPos in 0..mList.size && mList[cacheLoadingPos] == null) {
             mList.removeAt(cacheLoadingPos)
         }
         notifyDataSetChanged()
@@ -97,10 +101,6 @@ abstract class BaseSimpleRecyclerAdapter<T>(context: Context, protected var mLis
     fun onItemDismiss(position: Int) {
         mList.removeAt(position)
         notifyItemRemoved(position)
-    }
-
-    interface OnClickListener<T> {
-        fun onClick(item: T?, position: Int)
     }
 
     class LoadingViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)

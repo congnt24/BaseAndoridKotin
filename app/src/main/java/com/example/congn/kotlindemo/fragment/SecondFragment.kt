@@ -33,21 +33,23 @@ class SecondFragment : BaseFragment(R.layout.second_fragment) {
 //        }, Consumer { /*error*/ })
         recycler.layoutManager = LinearLayoutManager(activity)
         adapter = SimpleRecyclerAdapter(activity, list)
-        Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-                .map { it.toString() }
-                .subscribe({ list.add(it) }, {}, { adapter.notifyDataSetChanged() })
-        Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-                .map { it.toString() }
-                .subscribe({ list.add(it) }, {}, { adapter.notifyDataSetChanged() })
         recycler.adapter = adapter
+        Handler().postDelayed({
+            Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                    .map { it.toString() }
+                    .subscribe({ list.add(it) }, {}, { adapter.notifyDataSetChanged() })
+            Observable.just(1, 2, 3, 4, 5)
+                    .map { it.toString() }
+                    .subscribe({ list.add(it) }, {}, { adapter.removeLoadingIfNeed() })
+        }, 1000)
         adapter.setOnScrollListener(recycler, {
             Handler().postDelayed({
                 Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
                         .map { "" + (it * 2) }
                         .subscribe({ list.add(it) }, {}, {
                             adapter.removeLoadingIfNeed()
+                            it.restate()
                         })
-                it.restate()
             }, 2000)
         })
     }
